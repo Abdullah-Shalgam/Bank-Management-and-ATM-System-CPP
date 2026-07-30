@@ -1,40 +1,76 @@
-# 🏦 CLI Bank Client Management System (C++)
+# 🏦 CLI Bank System Extension - V2 (C++)
 
-A comprehensive Console-based Banking System written in C++ that manages client records, persistent file storage, and financial transactions safely.
+A comprehensive, production-grade Console-based Banking Management System written in C++. Extended from the Course 7 foundational project to include **User Management**, **Authentication**, **Bitwise Access Control**, and **Multi-file Persistence**.
 
 ---
 
 ## ✨ Features
-- **Full CRUD Operations:** Add, Show, Update, Delete, and Find client accounts seamlessly.
-- **Persistent Data Storage:** Saves and loads client records automatically using a flat-file database (`Clients.txt`) with custom record delimiters (`#//#`).
-- **Transaction System:**
+
+### 🔐 Authentication & Access Control (New in V2)
+- **Login / Logout System:** Secure entry with username and password authentication screen.
+- **Bitwise Permission Engine:** Fine-grained access control calculated using bitwise flags (`eAll`, `pListClients`, `pAddNewClient`, `pDeleteClient`, `pUpdateClient`, `pFindClient`, `pTranactions`, `pManageUsers`).
+- **Access Denied Guard:** Rejects unauthorized feature access gracefully with warning prompts.
+- **Admin Guardrails:** Protects critical administrative roles from accidental deletion and prevents logged-in users from deleting their own active accounts.
+
+### 👥 User Management System (New in V2)
+- **Full User CRUD Operations:** Add, Show, Update, Delete, and Find system users.
+- **Dynamic Permission Setup:** Interactively configure custom permission sets for each new or updated user.
+- **Persistent User Database:** Stores user access credentials and permission integers in `Users.txt`.
+
+### 💼 Client Management & Financial Transactions
+- **Full Client CRUD Operations:** Add, Show, Update, Delete, and Find client accounts seamlessly.
+- **Transaction Engine:**
   - **Deposit Money:** Increase account balances with instant persistent file sync.
   - **Withdraw Money:** Safe withdrawal system with insufficient balance checks.
-  - **Total Balances Screen:** View summary of all clients and overall bank capital.
-- **Strict Input Validation:** Custom validation for PIN codes (4-digit format), account uniqueness, and numeric values.
+  - **Total Balances Screen:** View summary of all clients and total bank capital.
+- **Data Persistence:** Automatic synchronization with `Clients.txt` using structured line delimiters (`#//#`).
+- **Strict Input Validation:** Enforces 4-digit numeric PIN verification, account number uniqueness checks, and positive numeric inputs.
 
 ---
 
-## 🛠️ Concepts & Architecture Applied
-- **File I/O Stream (`fstream`):** Parsing text streams into C++ `vector<stClient>` objects and vice-versa.
-- **Custom Parsing Engine:** Built `SplitText()` and formatting utilities to convert records between single-line formatted strings and C++ structures.
-- **Modular Library Integration:** Built with reusable header libraries (`InputLib.h`) for clean UI/UX interaction.
-- **Pass-by-Reference Optimization:** Utilizing `const vector<stClient>&` to maximize memory performance and execution speed.
+## 🛠️ Key C++ Concepts Applied
+
+- **Bitwise Operators (`|`, `&`):** Efficient bitmasking for reading, assigning, and validating user permission flags.
+- **Multi-file I/O Streams (`fstream`):** Parsing and serializing both `stClient` and `stUser` structs with file persistence (`Clients.txt` & `Users.txt`).
+- **Structured Data Design:** Use of C++ `struct`, `enum`, and `vector` for clean state management and system execution.
+- **Modular Library Architecture:** Integrated with `InputLib.h` for reliable input handling and validation.
+- **Memory & Performance Optimization:** Clean pass-by-reference mechanisms to ensure efficient memory utilization.
+
+---
+
+## 📂 Project Structure
+
+- `main.cpp` - Core application source code
+- `InputLib.h` - Input validation and console helper library
+- `Clients.txt` - Flat-file database for client records
+- `Users.txt` - Flat-file database for users and permission flags
+
+---
+
+## 🔑 Default Login Credentials
+
+For testing and demonstration, use the following administrator credentials:
+
+| Field | Value |
+| :--- | :--- |
+| **Username** | `Admin` |
+| **Password** | `1234` |
+| **Permissions** | Full Access (`-1`) |
 
 ---
 
 ## 🚀 How to Run
 
 ### Prerequisites
-- C++ Compiler (`g++` / MSVC).
-- Ensure `Clients.txt` and `InputLib.h` reside in the same root directory.
+- C++ Compiler (`g++`, `clang++`, or MSVC).
+- Ensure `main.cpp`, `InputLib.h`, `Clients.txt`, and `Users.txt` are located in the same directory.
 
 ### Compilation & Execution
 Using `g++` in Terminal:
 
 ```bash
-# Compile the main file
-g++ main.cpp -o BankSystem
+# Compile the system
+g++ main.cpp -o BankSystemV2
 
-# Run the system
-./BankSystem
+# Run the executable
+./BankSystemV2
