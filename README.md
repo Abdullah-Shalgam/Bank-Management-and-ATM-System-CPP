@@ -1,76 +1,130 @@
-# 🏦 CLI Bank System Extension - V2 (C++)
+# 🏦 Comprehensive C++ Banking & ATM Suite
 
-A comprehensive, production-grade Console-based Banking Management System written in C++. Extended from the Course 7 foundational project to include **User Management**, **Authentication**, **Bitwise Access Control**, and **Multi-file Persistence**.
+A production-grade, modular, console-based banking ecosystem written in modern C++. This repository contains two fully integrated applications operating on a shared flat-file client database (`Clients.txt`):
+1. **Bank Extension System** (Admin & Employee Console)
+2. **ATM System** (Customer Service Self-Terminal Console)
 
 ---
 
-## ✨ Features
+## 📑 Repository Structure & Architecture
 
-### 🔐 Authentication & Access Control (New in V2)
-- **Login / Logout System:** Secure entry with username and password authentication screen.
-- **Bitwise Permission Engine:** Fine-grained access control calculated using bitwise flags (`eAll`, `pListClients`, `pAddNewClient`, `pDeleteClient`, `pUpdateClient`, `pFindClient`, `pTranactions`, `pManageUsers`).
-- **Access Denied Guard:** Rejects unauthorized feature access gracefully with warning prompts.
-- **Admin Guardrails:** Protects critical administrative roles from accidental deletion and prevents logged-in users from deleting their own active accounts.
+This repository adopts a clean **Mono-Repo Layout** where every system operates as an isolated module while sharing data models and utilities.
 
-### 👥 User Management System (New in V2)
-- **Full User CRUD Operations:** Add, Show, Update, Delete, and Find system users.
-- **Dynamic Permission Setup:** Interactively configure custom permission sets for each new or updated user.
-- **Persistent User Database:** Stores user access credentials and permission integers in `Users.txt`.
+```text
+Bank-Management-and-ATM-System-CPP/
+│
+├── 📂 Bank-System/                  # Admin Management System Module
+│   ├── 📂 include/                  # Library Header Files (InputLib.h, etc.)
+│   ├── 📂 src/                      # Helper Source Files & Entry Point
+│   │   ├── InputLib.cpp
+│   │   ├── MathLib.cpp
+│   │   ├── MyStringLib.cpp
+│   │   └── main.cpp                 # Core Bank Extension Entry Point
+│   ├── Clients.txt                  # Shared Client Flat-File Database
+│   ├── Users.txt                    # System Users & Permissions Database
+│   └── README.md                    # Module Documentation
+│
+├── 📂 ATM-System/                   # Self-Service ATM Module
+│   ├── 📂 include/                  # Shared Helper Headers
+│   ├── 📂 src/                      # Helper Source Files & Entry Point
+│   │   ├── InputLib.cpp
+│   │   ├── MathLib.cpp
+│   │   ├── MyStringLib.cpp
+│   │   └── main.cpp                 # Core ATM System Entry Point
+│   ├── Clients.txt                  # Shared Client Flat-File Database Sync
+│   └── README.md                    # Module Documentation
+│
+└── README.md                        # Primary Suite Overview Documentation
+```
 
-### 💼 Client Management & Financial Transactions
-- **Full Client CRUD Operations:** Add, Show, Update, Delete, and Find client accounts seamlessly.
-- **Transaction Engine:**
-  - **Deposit Money:** Increase account balances with instant persistent file sync.
-  - **Withdraw Money:** Safe withdrawal system with insufficient balance checks.
-  - **Total Balances Screen:** View summary of all clients and total bank capital.
-- **Data Persistence:** Automatic synchronization with `Clients.txt` using structured line delimiters (`#//#`).
-- **Strict Input Validation:** Enforces 4-digit numeric PIN verification, account number uniqueness checks, and positive numeric inputs.
+---
+
+## 🌟 Modules Overview
+
+### 1. 📂 Bank Extension System (Admin Console)
+Designed for bank staff and system managers to control customer records, internal user access, and global transactions.
+
+* **🔐 Authentication & Bitwise Permissions:**
+  * User Login/Logout with password checking.
+  * Bitwise Access Control Engine (`eAll`, `pListClients`, `pAddNewClient`, `pDeleteClient`, `pUpdateClient`, `pFindClient`, `pTranactions`, `pManageUsers`).
+  * Admin Guardrails to protect active user sessions and primary admin roles.
+* **👥 Full User Management (CRUD):** Add, Edit, Delete, List, and Find system users with custom permission sets.
+* **💼 Client Accounts & Capital Control:** Full CRUD operations on client accounts, total bank balance aggregation, deposit, and withdrawal routines.
+
+### 2. 📂 ATM System (Customer Terminal Console)
+Designed for bank clients to perform self-service cash operations securely and intuitively.
+
+* **🛡️ Security Guards & Masking:**
+  * Real-time masked PIN entry (`****`) with full `Backspace` and `Enter` handling using low-level console inputs.
+  * Security Lockout Protection (locks session for a cooldown period after 3 failed PIN attempts).
+* **💵 Financial Operations:**
+  * **Quick Withdraw:** One-touch presets ($20 to $1000).
+  * **Normal Withdraw:** Custom amounts constrained to multiples of $5 with balance verification.
+  * **Deposit Engine:** Instant cash acceptance with instant file serialization.
+  * **Balance Inquiry & Account Details:** Real-time balance and customer info presentation.
+* **🎨 UI/UX & Visual Effects:**
+  * Interactive UI components (console spinners, progress bars, flashing alert indicators).
+  * Smooth Typewriter Text Effect rendering.
+  * Printable Transaction Receipts timestamped with live build/system times (`__DATE__` & `__TIME__`).
+* **👤 Profile Updates:** Name changing with regex validation, phone number updating, and secure PIN modification.
 
 ---
 
 ## 🛠️ Key C++ Concepts Applied
 
-- **Bitwise Operators (`|`, `&`):** Efficient bitmasking for reading, assigning, and validating user permission flags.
-- **Multi-file I/O Streams (`fstream`):** Parsing and serializing both `stClient` and `stUser` structs with file persistence (`Clients.txt` & `Users.txt`).
-- **Structured Data Design:** Use of C++ `struct`, `enum`, and `vector` for clean state management and system execution.
-- **Modular Library Architecture:** Integrated with `InputLib.h` for reliable input handling and validation.
-- **Memory & Performance Optimization:** Clean pass-by-reference mechanisms to ensure efficient memory utilization.
+- **Bitwise Operators (`|`, `&`):** Efficient bitmasking for reading, assigning, and validating permission flags.
+- **File Stream & Data Persistence (`fstream`):** Fast line-by-line parsing and delimiter serialization (`#//#`) across multi-file databases.
+- **Low-Level Console Input (`<conio.h>`):** Unbuffered key processing for masked PINs and interactive controls.
+- **Regular Expressions (`<regex>`):** Strict input sanitization for client account names.
+- **Multi-Threading & Time Controls (`<thread>`, `<chrono>`):** Asynchronous delays and smooth animations.
+- **Modular Library Architecture:** Custom `InputLib` header/implementation separation for reusability.
 
 ---
 
-## 📂 Project Structure
+## 🔑 Default Credentials
 
-- `main.cpp` - Core application source code
-- `InputLib.h` - Input validation and console helper library
-- `Clients.txt` - Flat-file database for client records
-- `Users.txt` - Flat-file database for users and permission flags
-
----
-
-## 🔑 Default Login Credentials
-
-For testing and demonstration, use the following administrator credentials:
-
+### Bank System Admin Credentials
 | Field | Value |
 | :--- | :--- |
 | **Username** | `Admin` |
 | **Password** | `1234` |
 | **Permissions** | Full Access (`-1`) |
 
+### Sample ATM Client Credentials (from shared `Clients.txt`)
+| Account Number | PIN Code | Client Name |
+| :--- | :--- | :--- |
+| `CL1001` | `8614` | Hassan Tarhouni |
+| `CL1003` | `3592` | Zaid Al-Warfali |
+| `CL1009` | `5182` | Zaid Tarhouni Shlgoom |
+
 ---
 
 ## 🚀 How to Run
 
 ### Prerequisites
-- C++ Compiler (`g++`, `clang++`, or MSVC).
-- Ensure `main.cpp`, `InputLib.h`, `Clients.txt`, and `Users.txt` are located in the same directory.
+- C++11 compliant compiler (`g++`, `clang++`, or MSVC).
+- **Windows OS** (required for `<conio.h>` and `system("color")` UI functionality).
 
-### Compilation & Execution
-Using `g++` in Terminal:
-
+### 1. Running the Bank Extension System
 ```bash
-# Compile the system
-g++ main.cpp -o BankSystemV2
+# Navigate to Bank System directory
+cd Bank-System
 
-# Run the executable
-./BankSystemV2
+# Compile the application
+g++ main.cpp src/InputLib.cpp -Iinclude -o BankSystem
+
+# Execute
+./BankSystem
+```
+
+### 2. Running the ATM System
+```bash
+# Navigate to ATM System directory
+cd ATM-System
+
+# Compile the application
+g++ main.cpp src/InputLib.cpp -Iinclude -o ATMSystem
+
+# Execute
+./ATMSystem
+```
