@@ -1,130 +1,195 @@
 # 🏦 Comprehensive C++ Banking & ATM Suite
 
-A production-grade, modular, console-based banking ecosystem written in modern C++. This repository contains two fully integrated applications operating on a shared flat-file client database (`Clients.txt`):
-1. **Bank Extension System** (Admin & Employee Console)
-2. **ATM System** (Customer Service Self-Terminal Console)
+<div align="center">
+
+[![C++ Standard](https://img.shields.io/badge/C%2B%2B-11%2F17-blue.svg?style=for-the-badge&logo=c%2B%2B)](https://en.cppreference.com/)
+[![Architecture](https://img.shields.io/badge/Architecture-Modular%20%2F%20CLI%20Suite-orange?style=for-the-badge&logo=codeforces)](https://github.com/Abdullah-Shalgam/Bank-Management-and-ATM-System-CPP)
+[![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg?style=for-the-badge&logo=windows)](https://github.com/Abdullah-Shalgam/Bank-Management-and-ATM-System-CPP)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+
+<p align="center">
+  A production-grade, modular, console-based banking ecosystem engineered in Modern C++. This repository features two fully integrated applications operating on a shared, synchronized flat-file database (<code>Clients.txt</code>), offering a complete simulation of enterprise administrative controls and customer-facing self-service ATM workflows.
+</p>
+
+</div>
 
 ---
 
-## 📑 Repository Structure & Architecture
+## 🗂️ Table of Contents
 
-This repository adopts a clean **Mono-Repo Layout** where every system operates as an isolated module while sharing data models and utilities.
+1. [Architectural Overview & Ecosystem](#%EF%B8%8F-architectural-overview--ecosystem)
+2. [Module Deep-Dive](#-module-deep-dive)
+3. [Key C++ & Software Engineering Concepts](#-key-c--software-engineering-concepts)
+4. [Data Serialization & Database Layout](#-data-serialization--database-layout)
+5. [Repository Structure](#-repository-structure)
+6. [Default Credentials](#-default-credentials)
+7. [Build & Execution Guide](#-build--execution-guide)
+8. [Contact & Developer Info](#-contact--developer-info)
+
+---
+
+## 🏛️ Architectural Overview & Ecosystem
+
+The suite consists of two decoupled applications that work together through a shared transactional data protocol:
 
 ```text
-Bank-Management-and-ATM-System-CPP/
-│
-├── 📂 Bank-System/                  # Admin Management System Module
-│   ├── 📂 include/                  # Library Header Files (InputLib.h, etc.)
-│   ├── 📂 src/                      # Helper Source Files & Entry Point
-│   │   ├── InputLib.cpp
-│   │   ├── MathLib.cpp
-│   │   ├── MyStringLib.cpp
-│   │   └── main.cpp                 # Core Bank Extension Entry Point
-│   ├── Clients.txt                  # Shared Client Flat-File Database
-│   ├── Users.txt                    # System Users & Permissions Database
-│   └── README.md                    # Module Documentation
-│
-├── 📂 ATM-System/                   # Self-Service ATM Module
-│   ├── 📂 include/                  # Shared Helper Headers
-│   ├── 📂 src/                      # Helper Source Files & Entry Point
-│   │   ├── InputLib.cpp
-│   │   ├── MathLib.cpp
-│   │   ├── MyStringLib.cpp
-│   │   └── main.cpp                 # Core ATM System Entry Point
-│   ├── Clients.txt                  # Shared Client Flat-File Database Sync
-│   └── README.md                    # Module Documentation
-│
-└── README.md                        # Primary Suite Overview Documentation
+               ┌─────────────────────────────────────────┐
+               │         Shared Flat-File Storage        │
+               │        (Clients.txt & Users.txt)        │
+               └────────────────────┬────────────────────┘
+                                    │
+           ┌────────────────────────┴────────────────────────┐
+           ▼                                                 ▼
+┌──────────────────────────────┐                 ┌──────────────────────────────┐
+│  📂 Bank Management Extension│                 │      📂 Self-Service ATM     │
+│       (Admin & Employee)     │                 │      (Customer Terminal)     │
+├──────────────────────────────┤                 ├──────────────────────────────┤
+│ • Bitwise RBAC System        │                 │ • Masked PIN Capture         │
+│ • Client Accounts CRUD       │                 │ • Interactive Quick Withdraw │
+│ • User IAM Management        │                 │ • Instant Receipt Rendering  │
+│ • Bank Capital Aggregation   │                 │ • Session Security Lockouts  │
+└──────────────────────────────┘                 └──────────────────────────────┘
 ```
 
 ---
 
-## 🌟 Modules Overview
+## 🌟 Module Deep-Dive
 
-### 1. 📂 Bank Extension System (Admin Console)
-Designed for bank staff and system managers to control customer records, internal user access, and global transactions.
+### 1️⃣ Bank Extension System (Admin & Employee Console)
+Designed for financial staff to manage client accounts, configure role-based access, and execute administrative operations.
 
-* **🔐 Authentication & Bitwise Permissions:**
-  * User Login/Logout with password checking.
-  * Bitwise Access Control Engine (`eAll`, `pListClients`, `pAddNewClient`, `pDeleteClient`, `pUpdateClient`, `pFindClient`, `pTranactions`, `pManageUsers`).
-  * Admin Guardrails to protect active user sessions and primary admin roles.
-* **👥 Full User Management (CRUD):** Add, Edit, Delete, List, and Find system users with custom permission sets.
-* **💼 Client Accounts & Capital Control:** Full CRUD operations on client accounts, total bank balance aggregation, deposit, and withdrawal routines.
+* **🔐 Authentication & Bitwise RBAC Engine:**
+  * Secure multi-user login and session persistence.
+  * Granular Permission Control using bitwise masks (`eAll`, `pListClients`, `pAddNewClient`, `pDeleteClient`, `pUpdateClient`, `pFindClient`, `pTransactions`, `pManageUsers`).
+  * Admin Guardrails preventing accidental lockout or modification of primary administrative accounts.
+* **👥 Complete User IAM Management (CRUD):** Add, update, delete, search, and assign dynamic permission bitmasks to bank operators.
+* **💼 Client Accounts & Capital Control:** Full account lifecycle management, real-time total bank liquidity aggregation, deposits, and withdrawal management.
 
-### 2. 📂 ATM System (Customer Terminal Console)
+### 2️⃣ ATM System (Customer Terminal Console)
 Designed for bank clients to perform self-service cash operations securely and intuitively.
 
-* **🛡️ Security Guards & Masking:**
-  * Real-time masked PIN entry (`****`) with full `Backspace` and `Enter` handling using low-level console inputs.
-  * Security Lockout Protection (locks session for a cooldown period after 3 failed PIN attempts).
+* **🛡️ Security & Input Sanitation:**
+  * Real-time masked PIN entry (`****`) with full Backspace and Enter handling using unbuffered console input.
+  * Automatic Security Lockout System (temporary terminal freeze after 3 consecutive invalid PIN attempts).
 * **💵 Financial Operations:**
-  * **Quick Withdraw:** One-touch presets ($20 to $1000).
-  * **Normal Withdraw:** Custom amounts constrained to multiples of $5 with balance verification.
-  * **Deposit Engine:** Instant cash acceptance with instant file serialization.
-  * **Balance Inquiry & Account Details:** Real-time balance and customer info presentation.
-* **🎨 UI/UX & Visual Effects:**
-  * Interactive UI components (console spinners, progress bars, flashing alert indicators).
-  * Smooth Typewriter Text Effect rendering.
-  * Printable Transaction Receipts timestamped with live build/system times (`__DATE__` & `__TIME__`).
-* **👤 Profile Updates:** Name changing with regex validation, phone number updating, and secure PIN modification.
+  * **Quick Withdraw:** Preset standard cash amounts ($20 to $1000) for fast operations.
+  * **Normal Withdraw:** Custom amount entry constrained to multiples of $5 with live balance validation.
+  * **Deposit Engine:** Instant cash acceptance with persistent record serialization.
+  * **Balance Inquiry:** Clear financial overview with printable timestamped receipts (`__DATE__` & `__TIME__`).
+* **🎨 UI/UX & Visual Styling:**
+  * Dynamic console UI elements (spinners, animated progress indicators, warning flags).
+  * Smooth typewriter text animations.
+* **👤 Profile Customization:** Self-service updates for customer name, phone number, and secure PIN changes.
 
 ---
 
-## 🛠️ Key C++ Concepts Applied
+## 🛠️ Key C++ & Software Engineering Concepts
 
-- **Bitwise Operators (`|`, `&`):** Efficient bitmasking for reading, assigning, and validating permission flags.
-- **File Stream & Data Persistence (`fstream`):** Fast line-by-line parsing and delimiter serialization (`#//#`) across multi-file databases.
-- **Low-Level Console Input (`<conio.h>`):** Unbuffered key processing for masked PINs and interactive controls.
-- **Regular Expressions (`<regex>`):** Strict input sanitization for client account names.
-- **Multi-Threading & Time Controls (`<thread>`, `<chrono>`):** Asynchronous delays and smooth animations.
-- **Modular Library Architecture:** Custom `InputLib` header/implementation separation for reusability.
+* **Bitwise Operations (`|`, `&`):** Ultra-fast $\mathcal{O}(1)$ permission validation and role-based access bitmasking.
+* **File I/O Stream & Data Persistence (`std::fstream`):** Line-by-line database parsing, delimiter-based data serialization (`#//#`), and multi-file synchronization.
+* **Low-Level Unbuffered Console Input (`<conio.h>` / `_getch`):** Custom input stream capturing for star-masked PINs and dynamic terminal controls.
+* **Input Sanitization & Validation (`<regex>`):** Strict input checking for account names, phone numbers, and financial entry limits.
+* **Multi-Threading & Temporal Control (`<thread>`, `<chrono>`):** Asynchronous delays, smooth animations, and timed lockouts.
+* **Modular Code Architecture:** Clean separation of concerns using custom headers (`.h`) and implementation files (`.cpp`).
+
+---
+
+## 💾 Data Serialization & Database Layout
+
+All data is stored in text-based flat files using `#//#` as the record field delimiter.
+
+### `Clients.txt` Layout
+```text
+AccountNumber#//#PinCode#//#Name#//#Phone#//#AccountBalance
+```
+
+### `Users.txt` Layout
+```text
+Username#//#Password#//#PermissionsBitmask
+```
+
+---
+
+## 📂 Repository Structure
+
+```text
+Bank-Management-and-ATM-System-CPP/
+│
+├── 📂 Bank-System/                  # Admin & Staff Management Engine
+│   ├── 📂 include/                  # System Header Files
+│   ├── 📂 src/                      # Source Code Implementations
+│   │   ├── InputLib.cpp
+│   │   ├── MathLib.cpp
+│   │   ├── MyStringLib.cpp
+│   │   └── main.cpp                 # Bank System Entry Point
+│   ├── Clients.txt                  # Client Database File
+│   ├── Users.txt                    # System Users & Permissions
+│   └── README.md                    # Module Documentation
+│
+├── 📂 ATM-System/                   # Self-Service ATM Customer Terminal
+│   ├── 📂 include/                  # Terminal Header Files
+│   ├── 📂 src/                      # Terminal Implementations
+│   │   ├── InputLib.cpp
+│   │   ├── MathLib.cpp
+│   │   ├── MyStringLib.cpp
+│   │   └── main.cpp                 # ATM Terminal Entry Point
+│   ├── Clients.txt                  # Synchronized Client Database
+│   └── README.md                    # Module Documentation
+│
+└── README.md                        # Primary Suite Documentation
+```
 
 ---
 
 ## 🔑 Default Credentials
 
-### Bank System Admin Credentials
-| Field | Value |
-| :--- | :--- |
-| **Username** | `Admin` |
-| **Password** | `1234` |
-| **Permissions** | Full Access (`-1`) |
+### Administrative Access (Bank System)
 
-### Sample ATM Client Credentials (from shared `Clients.txt`)
-| Account Number | PIN Code | Client Name |
+| Field | Default Value | Notes |
 | :--- | :--- | :--- |
-| `CL1001` | `8614` | Hassan Tarhouni |
-| `CL1003` | `3592` | Zaid Al-Warfali |
-| `CL1009` | `5182` | Zaid Tarhouni Shlgoom |
+| **Username** | `Admin` | Case-insensitive lookup |
+| **Password** | `1234` | System administrator |
+| **Permissions** | Full Access (`-1`) | Bypasses all RBAC checks |
+
+### Sample Client ATM Accounts (from `Clients.txt`)
+
+| Account Number | PIN Code | Account Holder |
+| :--- | :--- | :--- |
+| `CL100` | `1861` | Hassan Tarhouni |
+| `CL100` | `3359` | Zaid Al-Warfali |
+| `CL100` | `9518` | Zaid Tarhouni Shlgoom |
 
 ---
 
-## 🚀 How to Run
+## 🚀 Build & Execution Guide
 
-### Prerequisites
-- C++11 compliant compiler (`g++`, `clang++`, or MSVC).
-- **Windows OS** (required for `<conio.h>` and `system("color")` UI functionality).
+### Toolchain Requirements
+* C++11 or higher compliant compiler (`g++`, `clang++`, or `MSVC`).
+* Windows OS (Required for low-level console features: `<conio.h>` and `system("color")`).
 
-### 1. Running the Bank Extension System
+### 1️⃣ Building & Running the Bank System
+
 ```bash
-# Navigate to Bank System directory
 cd Bank-System
-
-# Compile the application
-g++ main.cpp src/InputLib.cpp -Iinclude -o BankSystem
-
-# Execute
+g++ -std=c++17 main.cpp src/InputLib.cpp src/MathLib.cpp src/MyStringLib.cpp -Iinclude -o BankSystem
 ./BankSystem
 ```
 
-### 2. Running the ATM System
+### 2️⃣ Building & Running the ATM Terminal
+
 ```bash
-# Navigate to ATM System directory
 cd ATM-System
-
-# Compile the application
-g++ main.cpp src/InputLib.cpp -Iinclude -o ATMSystem
-
-# Execute
+g++ -std=c++17 main.cpp src/InputLib.cpp src/MathLib.cpp src/MyStringLib.cpp -Iinclude -o ATMSystem
 ./ATMSystem
 ```
+
+---
+
+## 📬 Contact & Developer Info
+
+<p align="left">
+  <a href="https://github.com/Abdullah-Shalgam"><img src="https://img.shields.io/badge/GitHub-Abdullah--Shalgam-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
+  <a href="mailto:bdallhshlghwm500@gmail.com"><img src="https://img.shields.io/badge/Gmail-bdallhshlghwm500%40gmail.com-D14836?style=for-the-badge&logo=gmail" alt="Gmail"></a>
+  <a href="https://instagram.com/abdullah_shalgam"><img src="https://img.shields.io/badge/Instagram-@abdullah__shalgam-E4405F?style=for-the-badge&logo=instagram" alt="Instagram"></a>
+  <a href="https://wa.me/218931364346"><img src="https://img.shields.io/badge/WhatsApp-%2B218%2093%20136%204346-25D366?style=for-the-badge&logo=whatsapp" alt="WhatsApp"></a>
+</p>
