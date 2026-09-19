@@ -187,9 +187,14 @@ g++ -std=c++17 main.cpp src/InputLib.cpp src/MathLib.cpp src/MyStringLib.cpp -Ii
 
 ## 📬 Contact & Developer Info
 
-<p align="left">
-  <a href="https://github.com/Abdullah-Shalgam"><img src="https://img.shields.io/badge/GitHub-Abdullah--Shalgam-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
-  <a href="mailto:bdallhshlghwm500@gmail.com"><img src="https://img.shields.io/badge/Gmail-bdallhshlghwm500%40gmail.com-D14836?style=for-the-badge&logo=gmail" alt="Gmail"></a>
-  <a href="https://instagram.com/abdullah_shalgam"><img src="https://img.shields.io/badge/Instagram-@abdullah__shalgam-E4405F?style=for-the-badge&logo=instagram" alt="Instagram"></a>
-  <a href="https://wa.me/218931364346"><img src="https://img.shields.io/badge/WhatsApp-%2B218%2093%20136%204346-25D366?style=for-the-badge&logo=whatsapp" alt="WhatsApp"></a>
-</p>
+[![GitHub](https://img.shields.io/badge/GitHub-Abdullah--Shalgam-181717?style=for-the-badge&logo=github)](https://github.com/Abdullah-Shalgam)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Abdullah_Shalgam-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D9%84%D9%87-%D8%B4%D9%84%D8%BA%D9%88%D9%85-289506438)
+[![Instagram](https://img.shields.io/badge/Instagram-@abdullah__shalgam-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/abdullah_shalgam)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-+218%2093%20136%204346-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/2180931364346)
+[![Email](https://img.shields.io/badge/Email-bdallhshlghwm500@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:bdallhshlghwm500@gmail.com)
+
+---
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
